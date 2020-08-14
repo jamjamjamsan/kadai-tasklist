@@ -45,8 +45,13 @@ class TasksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $request->validate([
+            "status" => "required|max:10",
+            "content" => "required|max:255",
+        ]);
         $task = new Task;
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
 
@@ -95,9 +100,16 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+        $request->validate([
+            "status" => "required|max:10",
+            "content" => "required|max:255",
+        ]);
+        
         $task = Task::findOrFail($id);
         // メッセージを更新
         $task->content = $request->content;
+        $task->status = $request->status;
         $task->save();
 
         // トップページへリダイレクトさせる
