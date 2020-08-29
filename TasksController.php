@@ -15,24 +15,12 @@ class TasksController extends Controller
      */
     public function index()
     {   
-        if(\Auth::check()){
-         $tasks = Task::all();
-         //$user = \Auth::user();
-         //$tasks = $user->tasks()->get();
+        $tasks = Task::all();
 
         // メッセージ一覧ビューでそれを表示
         return view('tasks.index', [
             'tasks' => $tasks,
-        
         ]);
-            
-        }
-        else
-       
-        return view("welcome");
-         
-
-
     }
 
     /**
@@ -81,18 +69,11 @@ class TasksController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
-        //$user = User::findOrFail($id);
-        //$task = $user->tasks()->get();
-        if (\Auth::id() === $task->user_id) {
-             return view('tasks.show', [
+
+        // メッセージ詳細ビューでそれを表示
+        return view('tasks.show', [
             'task' => $task,
         ]);
-        }
-        else return redirect("/");
-        // メッセージ詳細ビューでそれを表示
-       // return view('tasks.show', [
-            //'task' => $task,
-       // ]);
     }
 
     /**
@@ -104,14 +85,11 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
-        if (\Auth::id() === $task->user_id) {
-            return view('tasks.edit', [
-            'task' => $task,
-        ]);
-        }
 
         // メッセージ編集ビューでそれを表示
-        else return redirect("/");
+        return view('tasks.edit', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -133,7 +111,6 @@ class TasksController extends Controller
         // メッセージを更新
         $task->content = $request->content;
         $task->status = $request->status;
-        $task->user_id = Auth()->id();
         $task->save();
 
         // トップページへリダイレクトさせる
@@ -149,12 +126,8 @@ class TasksController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
-        if (\Auth::id() === $task->user_id) {
-             // メッセージを削除
-             $task->delete();
-        }
-        
-       
+        // メッセージを削除
+        $task->delete();
 
         // トップページへリダイレクトさせる
         return redirect('/');

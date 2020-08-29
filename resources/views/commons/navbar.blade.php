@@ -6,13 +6,23 @@
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse" id="nav-bar">
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-                {{-- メッセージ作成ページへのリンク --}}
-                <li class="nav-item">{!! link_to_route('tasks.create', '新規タスクの投稿', [], ['class' => 'nav-link']) !!}</li>
-            </ul>
-        </div>
+        @if(Auth::check())
+            <div class="collapse navbar-collapse" id="nav-bar">
+                <ul class="navbar-nav mr-auto"></ul>
+                <ul class="navbar-nav">
+                    {{-- メッセージ作成ページへのリンク --}}
+                    <li class="nav-item">{!! link_to_route('tasks.create', '新規タスクの投稿', [], ['class' => 'nav-link']) !!}</li>
+                    <li class="nav-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
+                </ul>
+            </div>
+        @else
+             <div class="collapse navbar-collapse" id="nav-bar">
+                <ul class="navbar-nav mr-auto"></ul>
+                    {{-- ユーザ登録ページへのリンク --}}
+                    <li class="nav-item">{!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}</li>
+                    {{-- ログインページへのリンク --}}
+                    <li class="nav-item">{!! link_to_route('login', 'Login', [], ['class' => 'nav-link']) !!}</li>
+        @endif
+        
     </nav>
 </header>

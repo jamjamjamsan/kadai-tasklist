@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+   
 
     <h1>タスク一覧</h1>
 
@@ -23,7 +24,10 @@
                 @endforeach
             </tbody>
         </table>
+    @else 
+        
     @endif
+    
     
     {!! link_to_route('tasks.create', 'タスクの投稿', [], ['class' => 'btn btn-primary']) !!}
 
