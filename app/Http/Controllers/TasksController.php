@@ -16,9 +16,9 @@ class TasksController extends Controller
     public function index()
     {   
         if(\Auth::check()){
-         $tasks = Task::all();
-         //$user = \Auth::user();
-         //$tasks = $user->tasks()->get();
+         //$tasks = Task::all();
+         $user = \Auth::user();
+         $tasks = $user->tasks()->get();
 
         // メッセージ一覧ビューでそれを表示
         return view('tasks.index', [
